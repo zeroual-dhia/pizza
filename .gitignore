@@ -1,0 +1,19 @@
+# Flutter
+client/.dart_tool/
+client/.packages
+client/build/
+client/ios/Flutter/Flutter.framework
+client/android/.gradle/
+client/android/app/build/
+*.lock
+
+# Node.js
+server/node_modules/
+server/.env
+
+# Firebase/Secrets
+server/serviceAccountKey.json
+
+# General
+*.log
+
