@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pizza/constants.dart';
 import 'package:pizza/models/navigation.dart';
-import 'package:pizza/routes/loading.dart';
 import 'package:pizza/server/auth.dart';
 import 'package:pizza/widgets/profileInput.dart';
 import 'package:http/http.dart' as http;
@@ -192,11 +190,13 @@ class _ProfileState extends State<Profile> {
                               const SizedBox(height: 40),
 
                               TextButton.icon(
+                                
                                 onPressed: () async {
                                   context.read<NavigationProvider>().reset();
                                   await _auth.logout();
                                 },
                                 style: TextButton.styleFrom(
+                                  
                                   backgroundColor: Color(0xffEF1C26),
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 20,

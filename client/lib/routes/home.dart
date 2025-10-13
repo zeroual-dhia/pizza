@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +69,6 @@ class _HomeBodyState extends State<HomeBody> {
 
     await pizzaProvidre.fetchPizza(token);
     await favProvider.fetchFavs(token ?? '');
-    await await Future.delayed(Duration(seconds: 1));
     setState(() {
       isloading = false;
     });
@@ -80,139 +77,143 @@ class _HomeBodyState extends State<HomeBody> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
-    return isloading
-        ? Center(child: CircularProgressIndicator(color: Color(0xffEF1C26)))
-        : Padding(
-            padding: EdgeInsetsGeometry.fromLTRB(20, 50, 20, 0),
-            child: Column(
+    return AnimatedOpacity(
+      opacity: isloading ? 0 : 1,
+      duration: Duration(milliseconds: 300),
+      child: Padding(
+        padding: EdgeInsetsGeometry.fromLTRB(20, 50, 20, 0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Icon(Icons.location_on, color: Color(0xffEF1C26)),
-                        SizedBox(width: 10),
-                        Text(
-                          "Algiers",
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.keyboard_arrow_down_sharp),
-                        ),
-                      ],
+                    Icon(Icons.location_on, color: Color(0xffEF1C26)),
+                    SizedBox(width: 10),
+                    Text(
+                      "Algiers",
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
 
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.settings),
-                      style: IconButton.styleFrom(
-                        backgroundColor: Color(0xffF8F8F8),
-                      ),
+                      icon: Icon(Icons.keyboard_arrow_down_sharp),
                     ),
                   ],
                 ),
-                SizedBox(height: 25),
-                Offer(),
-                SizedBox(height: 25),
-                Offer(),
-                SizedBox(height: 13),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Popular pizza",
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      InkWell(
-                        focusColor: Colors.white,
-                        highlightColor: Colors.white,
-                        splashColor: Colors.white,
-                        child: Text(
-                          "See All",
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Color(0xffEF1C26),
-                          ),
-                        ),
-                        onTap: () {
-                          context.push('/home/seeAll');
-                        },
-                      ),
-                    ],
+
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.settings),
+                  style: IconButton.styleFrom(
+                    backgroundColor: Color(0xffF8F8F8),
                   ),
-                ),
-                Consumer<Pizza>(
-                  builder: (context, pizza, child) {
-                    final chosen = [
-                      pizza.pizzas[0],
-                      pizza.pizzas[5],
-                      pizza.pizzas[1],
-                    ];
-                    return Column(
-                      children: [
-                        CarouselSlider(
-                          items: chosen
-                              .map((piza) => Pizzacard(pizza: piza))
-                              .toList(),
-                          options: CarouselOptions(
-                            clipBehavior: Clip.none,
-                            autoPlay: false,
-                            autoPlayInterval: Duration(seconds: 3),
-                            autoPlayAnimationDuration: Duration(
-                              milliseconds: 800,
-                            ),
-                            enlargeCenterPage: false,
-                            aspectRatio: 16 / 9,
-                            viewportFraction: 0.85,
-                            height: 270,
-                            onPageChanged: (i, reason) {
-                              setState(() {
-                                index = i;
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: chosen
-                              .map((piza) => Pizzacard(pizza: piza))
-                              .toList()
-                              .asMap()
-                              .entries
-                              .map(
-                                (item) => Container(
-                                  height: 8,
-                                  width: 8,
-                                  margin: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: index == item.key
-                                        ? Colors.black
-                                        : Colors.grey.withAlpha(100),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    );
-                  },
                 ),
               ],
             ),
-          );
+            SizedBox(height: 25),
+            Offer(),
+            SizedBox(height: 25),
+            Offer(),
+            SizedBox(height: 13),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Popular pizza",
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  InkWell(
+                    focusColor: Colors.white,
+                    highlightColor: Colors.white,
+                    splashColor: Colors.white,
+                    child: Text(
+                      "See All",
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Color(0xffEF1C26),
+                      ),
+                    ),
+                    onTap: () {
+                      context.push('/home/seeAll');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            isloading
+                ? Container()
+                : Consumer<Pizza>(
+                    builder: (context, pizza, child) {
+                      final chosen = [
+                        pizza.pizzas[0],
+                        pizza.pizzas[5],
+                        pizza.pizzas[1],
+                      ];
+                      return Column(
+                        children: [
+                          CarouselSlider(
+                            items: chosen
+                                .map((piza) => Pizzacard(pizza: piza))
+                                .toList(),
+                            options: CarouselOptions(
+                              clipBehavior: Clip.none,
+                              autoPlay: false,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration: Duration(
+                                milliseconds: 800,
+                              ),
+                              enlargeCenterPage: false,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 0.85,
+                              height: 270,
+                              onPageChanged: (i, reason) {
+                                setState(() {
+                                  index = i;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: chosen
+                                .map((piza) => Pizzacard(pizza: piza))
+                                .toList()
+                                .asMap()
+                                .entries
+                                .map(
+                                  (item) => Container(
+                                    height: 8,
+                                    width: 8,
+                                    margin: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: index == item.key
+                                          ? Colors.black
+                                          : Colors.grey.withAlpha(100),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+          ],
+        ),
+      ),
+    );
   }
 }

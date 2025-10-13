@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:pizza/models/cartmodel.dart';
 import 'package:pizza/models/favourite.dart';
+import 'package:pizza/widgets/addbutton.dart';
 import 'package:provider/provider.dart';
 
 class Pizzacard2 extends StatelessWidget {
@@ -28,7 +30,14 @@ class Pizzacard2 extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.asset(width: 145, "${pizza['image_url']}", fit: BoxFit.cover),
+            Hero(
+              tag: pizza['id'],
+              child: Image.asset(
+                width: 145,
+                "${pizza['image_url']}",
+                fit: BoxFit.cover,
+              ),
+            ),
 
             Expanded(
               flex: 2,
@@ -119,16 +128,10 @@ class Pizzacard2 extends StatelessWidget {
                       SizedBox(width: 10),
                       Consumer<CartProvider>(
                         builder: (context, cart, child) {
-                          return IconButton(
-                            constraints: const BoxConstraints(),
-                            onPressed: () {
-                              cart.addPizza(pizza);
-                            },
-                            icon: const Icon(Icons.add, color: Colors.white),
-                            style: IconButton.styleFrom(
-                              padding: EdgeInsets.all(2),
-                              backgroundColor: Colors.black,
-                            ),
+                          return Addbutton(
+                            cart: cart,
+                            pizza: pizza,
+                            isboxconst: true,
                           );
                         },
                       ),

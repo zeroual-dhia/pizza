@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pizza/models/cartmodel.dart';
 import 'package:pizza/models/favourite.dart';
+import 'package:pizza/widgets/addbutton.dart';
 import 'package:provider/provider.dart';
 
 class Pizzacard extends StatelessWidget {
@@ -114,15 +115,7 @@ class Pizzacard extends StatelessWidget {
                     ),
                     Consumer<CartProvider>(
                       builder: (context, cart, child) {
-                        return IconButton(
-                          onPressed: () {
-                            cart.addPizza(pizza);
-                          },
-                          icon: const Icon(Icons.add, color: Colors.white),
-                          style: IconButton.styleFrom(
-                            backgroundColor: Colors.black,
-                          ),
-                        );
+                        return Addbutton(cart: cart,pizza: pizza,);
                       },
                     ),
                   ],
@@ -135,7 +128,10 @@ class Pizzacard extends StatelessWidget {
             left: 0,
             right: 0,
             child: Center(
-              child: Image.asset("${pizza['image_url']}", width: 120),
+              child: Hero(
+                tag: pizza['id'],
+                child: Image.asset("${pizza['image_url']}", width: 120),
+              ),
             ),
           ),
         ],

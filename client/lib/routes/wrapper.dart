@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pizza/models/navigation.dart';
 import 'package:pizza/routes/Welcome/welcome.dart';
-import 'package:pizza/routes/allPizza.dart';
 import 'package:pizza/routes/home.dart';
 import 'package:pizza/server/services/user.dart';
 import 'package:provider/provider.dart';

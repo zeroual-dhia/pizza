@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pizza/models/navigation.dart';
-import 'package:provider/provider.dart';
 
 class Navigatorbar extends StatefulWidget {
   const Navigatorbar({super.key, required this.navigation});

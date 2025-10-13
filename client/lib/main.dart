@@ -6,7 +6,6 @@ import 'package:pizza/models/navigation.dart';
 import 'package:pizza/models/pizza.dart';
 import 'package:pizza/models/favourite.dart';
 import 'package:pizza/routes/allPizza.dart';
-import 'package:pizza/routes/cart.dart';
 import 'package:pizza/routes/home.dart';
 import 'package:pizza/routes/auth/login.dart';
 import 'package:pizza/routes/auth/register.dart';
@@ -18,7 +17,7 @@ import 'package:provider/provider.dart';
 
 final router = GoRouter(
   initialLocation: '/',
-  routes: [
+  routes: [  
     GoRoute(
       path: '/',
       builder: (context, state) => Wrapper(),

@@ -4,9 +4,15 @@ import 'package:pizza/models/cartmodel.dart';
 import 'package:pizza/widgets/cartobject.dart';
 import 'package:provider/provider.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
   const Cart({super.key});
 
+  @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
