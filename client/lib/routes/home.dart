@@ -13,6 +13,7 @@ import 'package:pizza/widgets/navigatorBar.dart';
 import 'package:pizza/widgets/offer.dart';
 import 'package:pizza/widgets/pizzacard.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -77,9 +78,9 @@ class _HomeBodyState extends State<HomeBody> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: isloading ? 0 : 1,
-      duration: Duration(milliseconds: 300),
+    return Skeletonizer(
+      enableSwitchAnimation: true,
+      enabled: isloading,
       child: Padding(
         padding: EdgeInsetsGeometry.fromLTRB(20, 50, 20, 0),
         child: Column(
@@ -133,6 +134,7 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   ),
                   InkWell(
+                    
                     focusColor: Colors.white,
                     highlightColor: Colors.white,
                     splashColor: Colors.white,

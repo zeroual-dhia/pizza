@@ -44,6 +44,8 @@ dependencies:
   flutter_spinkit: ^5.2.2
   carousel_slider: ^5.1.1
   http: ^1.5.0
+  skeletonizer: ^2.1.0+1
+  awesome_snackbar_content: ^0.1.8
 
 dev_dependencies:
   flutter_test:
@@ -69,19 +71,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/landingGirl.png
-    - assets/images/young-pretty-woman-eating-pizza-pizza.png
-    - assets/images/young-pretty-woman-eating-pizza-pizza1.png
+  
     - assets/icon/google.svg
-    - assets/images/loadingimage.png
-    - assets/images/Main image 1.png
-    - assets/images/Pepperoni Pizza.png
-    - assets/images/Pepperoni Pizza (1).png
-    - assets/images/pepper.png
-    - assets/images/fire.png
-    - assets/images/dhia.jpeg
-    - assets/images/delecious.jpg
-    - assets/images/Margherita Pizza.png
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

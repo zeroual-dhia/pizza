@@ -33,9 +33,9 @@ final router = GoRouter(
           routes: [
             GoRoute(path: 'seeAll', builder: (context, state) => Allpizza()),
             GoRoute(
-              path: 'pizzaInfo/:id', // <-- dynamic route
+              path: 'pizzaInfo/:id',
               builder: (context, state) {
-                final id = state.pathParameters['id']; // get the id
+                final id = state.pathParameters['id']; 
                 return PizzaInfo(id: id);
               },
             ),

@@ -8,6 +8,7 @@ import 'package:pizza/server/auth.dart';
 import 'package:pizza/widgets/profileInput.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -78,155 +79,151 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: isLoading
-            ? Center(child: CircularProgressIndicator(color: Color(0xffEF1C26)))
-            : Padding(
-                padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
-                child: Column(
+        child: Skeletonizer(
+          enabled: isLoading,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Profile",
-                          style: GoogleFonts.pacifico(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            letterSpacing: 3,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                check = !check;
-                              });
-                              final response = await http.post(
-                                Uri.parse('${AppConfig.baseUrl}/user'),
-                                headers: {
-                                  'Authorization': 'Bearer $token',
-                                  'Content-Type': ' application/json',
-                                },
-                                body: jsonEncode({
-                                  'name': nameController.text,
-                                  'email': emailController.text,
-                                  'phoneNumber': phoneController.text,
-                                  'location': locationController.text,
-                                }),
-                              );
-                              if (response.statusCode == 200) {
-                                print("user data updated");
-                              } else {
-                                print(
-                                  "failed to update user data ${response.statusCode} - ${response.body}",
-                                );
-                              }
-                            }
-                          },
-                          icon: Icon(check ? Icons.edit : Icons.check),
-                          style: IconButton.styleFrom(
-                            backgroundColor: const Color(0xffF8F8F8),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Profile",
+                      style: GoogleFonts.pacifico(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        letterSpacing: 3,
+                      ),
                     ),
-                    const SizedBox(height: 20),
-
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 0,
-                          horizontal: 20,
-                        ),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ClipOval(
-                                child: Image.asset(
-                                  'assets/images/dhia.jpeg',
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              const SizedBox(height: 30),
-
-                              Profileinput(
-                                icon: const Icon(Icons.email),
-                                label: "your email : ",
-                                readOnly: true,
-                                controller: emailController,
-                                selector: "email",
-                              ),
-                              const SizedBox(height: 25),
-
-                              Profileinput(
-                                icon: const Icon(Icons.account_circle),
-                                label: "your name :",
-                                readOnly: check,
-                                controller: nameController,
-                                selector: "name",
-                              ),
-                              const SizedBox(height: 25),
-
-                              Profileinput(
-                                icon: const Icon(Icons.phone),
-                                label: "your phone number : ",
-                                readOnly: check,
-                                controller: phoneController,
-                                selector: "phone",
-                              ),
-                              const SizedBox(height: 25),
-
-                              Profileinput(
-                                icon: const Icon(Icons.location_on),
-                                label: "your location : ",
-                                readOnly: check,
-                                controller: locationController,
-                                selector: "location",
-                              ),
-                              const SizedBox(height: 40),
-
-                              TextButton.icon(
-                                
-                                onPressed: () async {
-                                  context.read<NavigationProvider>().reset();
-                                  await _auth.logout();
-                                },
-                                style: TextButton.styleFrom(
-                                  
-                                  backgroundColor: Color(0xffEF1C26),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 8,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.logout,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  "logout",
-                                  style: GoogleFonts.inter(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                    IconButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            check = !check;
+                          });
+                          final response = await http.post(
+                            Uri.parse('${AppConfig.baseUrl}/user'),
+                            headers: {
+                              'Authorization': 'Bearer $token',
+                              'Content-Type': ' application/json',
+                            },
+                            body: jsonEncode({
+                              'name': nameController.text,
+                              'email': emailController.text,
+                              'phoneNumber': phoneController.text,
+                              'location': locationController.text,
+                            }),
+                          );
+                          if (response.statusCode == 200) {
+                            print("user data updated");
+                          } else {
+                            print(
+                              "failed to update user data ${response.statusCode} - ${response.body}",
+                            );
+                          }
+                        }
+                      },
+                      icon: Icon(check ? Icons.edit : Icons.check),
+                      style: IconButton.styleFrom(
+                        backgroundColor: const Color(0xffF8F8F8),
                       ),
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 20),
+
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 20,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipOval(
+                            child: Image.asset(
+                              'assets/images/dhia.jpeg',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+
+                          Profileinput(
+                            icon: const Icon(Icons.email),
+                            label: "your email : ",
+                            readOnly: true,
+                            controller: emailController,
+                            selector: "email",
+                          ),
+                          const SizedBox(height: 25),
+
+                          Profileinput(
+                            icon: const Icon(Icons.account_circle),
+                            label: "your name :",
+                            readOnly: check,
+                            controller: nameController,
+                            selector: "name",
+                          ),
+                          const SizedBox(height: 25),
+
+                          Profileinput(
+                            icon: const Icon(Icons.phone),
+                            label: "your phone number : ",
+                            readOnly: check,
+                            controller: phoneController,
+                            selector: "phone",
+                          ),
+                          const SizedBox(height: 25),
+
+                          Profileinput(
+                            icon: const Icon(Icons.location_on),
+                            label: "your location : ",
+                            readOnly: check,
+                            controller: locationController,
+                            selector: "location",
+                          ),
+                          const SizedBox(height: 40),
+
+                          TextButton.icon(
+                            onPressed: () async {
+                              context.read<NavigationProvider>().reset();
+                              await _auth.logout();
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Color(0xffEF1C26),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 8,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            icon: const Icon(Icons.logout, color: Colors.white),
+                            label: Text(
+                              "logout",
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
